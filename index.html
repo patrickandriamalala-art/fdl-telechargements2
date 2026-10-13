@@ -26,6 +26,9 @@ main{padding:14px 12px calc(30px + env(safe-area-inset-bottom));max-width:680px;
 .fichier .info{font-size:13px;color:var(--doux)}
 .bouton{display:block;text-decoration:none;text-align:center;background:var(--navy);color:#fff;border-radius:12px;padding:12px 16px;font-size:17px;font-weight:700;white-space:nowrap}
 .bouton:active{background:var(--navy2)}
+.bouton.sec{background:#fff;color:var(--navy);border:2px solid var(--navy);padding:10px 14px}
+.actions{display:flex;flex-direction:column;gap:8px}
+.aide-import{font-size:14px;color:var(--doux);margin:-4px 4px 12px}
 details.aide{background:#fff;border:1px solid var(--bord);border-radius:14px;padding:12px 14px;margin-bottom:12px}
 details.aide summary{font-weight:700;color:var(--navy);cursor:pointer}
 details.aide ol{padding-left:20px;margin:10px 0 6px}
@@ -44,7 +47,7 @@ footer{text-align:center;font-size:12px;color:var(--doux);padding:4px 12px 16px}
 <main id="app"></main>
 <footer id="pied"></footer>
 
-<script id="donnees" type="application/json">{"langue_defaut":"mg","langue_libre":false,"titre":{"fr":"Téléchargements FDL","mg":"Fisintonana FDL"},"maj":{"fr":"12 octobre 2026","mg":"12 Oktobra 2026"},"fichiers":[{"nom":"FDL.apk","href":"FDL.apk","type":"apk","octets":87491,"libelle_fr":"Application Android (rappels et programme)","libelle_mg":"Rindranasa Android (fampahatsiahivana sy fandaharana)"},{"nom":"FDL_Mon_Planning.html","href":"FDL_Mon_Planning.html","type":"page","octets":103418,"libelle_fr":"Page du programme (tous les téléphones, navigateur)","libelle_mg":"Pejy fandaharana (finday rehetra, navigateur)"},{"nom":"Programme_FDL_S1_2027.docx","href":"Programme_FDL_S1_2027.docx","type":"autre","octets":40130,"libelle_fr":"Programme_FDL_S1_2027","libelle_mg":"Fandaharana FDL_Jan_Jona"},{"nom":"Programme_FDL_S2_2027.docx","href":"Programme_FDL_S2_2027.docx","type":"autre","octets":40130,"libelle_fr":"Programme_FDL_S2_2027","libelle_mg":"Fandaharana FDL-Jolay_Des"}]}</script>
+<script id="donnees" type="application/json">{"langue_defaut":"mg","langue_libre":false,"titre":{"fr":"Téléchargements FDL","mg":"Fisintonana FDL"},"maj":{"fr":"13 octobre 2026","mg":"13 Oktobra 2026"},"fichiers":[{"nom":"FDL.apk","href":"FDL.apk","type":"apk","octets":87491,"libelle_fr":"Application Android (rappels et programme)","libelle_mg":"Rindranasa Android (fampahatsiahivana sy fandaharana)"},{"nom":"FDL_Mon_Planning.html","href":"FDL_Mon_Planning.html","type":"page","octets":103418,"libelle_fr":"Page du programme (tous les téléphones, navigateur)","libelle_mg":"Pejy fandaharana (finday rehetra, navigateur)"},{"nom":"Programme_FDL_S1_2027.docx","href":"Programme_FDL_S1_2027.docx","type":"autre","octets":40130,"libelle_fr":"Programme_FDL_S1_2027","libelle_mg":"Fandaharana FDL_Jan_Jona"},{"nom":"Programme_FDL_S2_2027.docx","href":"Programme_FDL_S2_2027.docx","type":"autre","octets":40130,"libelle_fr":"Programme_FDL_S2_2027","libelle_mg":"Fandaharana FDL-Jolay_Des"}]}</script>
 <script>
 (function(){
 "use strict";
@@ -59,6 +62,7 @@ var TXT = {
                "Ouvrez l'application, acceptez les notifications, puis chargez le programme ou choisissez votre groupe et votre nom."],
        ancienne:"Si vous avez déjà une ancienne version de l'application, désinstallez-la d'abord.",
        iphone:"iPhone : l'application Android ne s'installe pas. Utilisez la « Page du programme » : elle s'ouvre dans le navigateur.",
+       import_aide:"Pour l'application Android : touchez « Télécharger », puis dans l'application touchez « Charger le programme » et choisissez le fichier {nom} (dossier Téléchargements).",
        pied:"Mis à jour le {d}", autre:"Fichier"},
   mg: {titre:"Fisintonana FDL", sous:"Safidio izay tianao hosintonina.", dl:"Sintony", ouvrir:"Sokafy", taille:"Habe",
        aide_titre:"Ahoana ny fametrahana ny rindranasa Android",
@@ -69,6 +73,7 @@ var TXT = {
                "Sokafy ny rindranasa, avelao ny fampandrenesana, avy eo ampidiro ny fandaharana na fidio ny vondronao sy ny anaranao."],
        ancienne:"Raha efa manana dikan-teny taloha ianao, esory aloha izany.",
        iphone:"iPhone : tsy azo apetraka ny rindranasa Android. Ampiasao ny « Pejy fandaharana » : misokatra ao amin'ny navigateur izany.",
+       import_aide:"Ho an'ny rindranasa Android : tsindrio ny « Sintony », dia ao amin'ny rindranasa tsindrio ny « Ampidiro ny fandaharana » ary fidio ny rakitra {nom} (ao amin'ny lahatahiry Fisintonana).",
        pied:"Nohavaozina tamin'ny {d}", autre:"Rakitra"}
 };
 var ICONES = {apk:"📱", page:"🌐", autre:"📄"};
@@ -94,9 +99,13 @@ function render(){
     if(f.type === "apk") aApk = true; if(f.type === "page") aPage = true;
     var lib = f["libelle_" + l] || f.libelle_fr || f.nom;
     var ouvre = f.type === "page";
+    var boutons = ouvre
+      ? '<a class="bouton" href="' + esc(f.href) + '">' + esc(T.ouvrir) + '</a><a class="bouton sec" href="' + esc(f.href) + '" download>' + esc(T.dl) + '</a>'
+      : '<a class="bouton" href="' + esc(f.href) + '" download>' + esc(T.dl) + '</a>';
     h += '<div class="carte fichier"><div class="ico">' + (ICONES[f.type] || ICONES.autre) + '</div>' +
          '<div class="txt"><div class="nom">' + esc(lib) + '</div><div class="info">' + esc(T.taille) + ' : ' + esc(taille(f.octets, l)) + '</div></div>' +
-         '<a class="bouton" href="' + esc(f.href) + '"' + (ouvre ? '' : ' download') + '>' + esc(ouvre ? T.ouvrir : T.dl) + '</a></div>';
+         '<div class="actions">' + boutons + '</div></div>';
+    if(ouvre) h += '<div class="aide-import">' + esc(T.import_aide.replace("{nom}", f.nom)) + '</div>';
   });
   if(aApk){
     h += '<details class="aide"><summary>' + esc(T.aide_titre) + '</summary><ol>' + T.etapes.map(function(e){ return '<li>' + esc(e) + '</li>'; }).join("") + '</ol>' +

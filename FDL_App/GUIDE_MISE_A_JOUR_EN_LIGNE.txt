@@ -1,0 +1,90 @@
+MISE A JOUR AUTOMATIQUE DU PROGRAMME PAR INTERNET - GUIDE PAS A PAS
+==================================================================
+
+PRINCIPE
+  Vous publiez UN fichier (programme.json) sur GitHub. Les membres le recoivent tout seul
+  quand ils ouvrent l'application (ou la page) avec internet. Plus besoin de renvoyer
+  le fichier a chacun. Le fichier est tres leger (environ 5 Ko).
+
+ATTENTION - CONFIDENTIALITE
+  Le depot GitHub doit etre PUBLIC : toute personne qui connait l'adresse peut lire le
+  fichier, donc les NOMS des membres et leurs roles. N'y mettez rien d'autre.
+  Pour tout retirer un jour : supprimez le depot sur GitHub.
+
+----------------------------------------------------------------------
+A) UNE SEULE FOIS : creer le depot public
+----------------------------------------------------------------------
+  1. Connectez-vous sur github.com (le compte que vous avez deja).
+  2. Cliquez sur "+" (en haut a droite) > "New repository".
+  3. Nom du depot : fdl-programme
+  4. Choisissez "Public".
+  5. Cochez "Add a README file".
+  6. Cliquez sur "Create repository".
+
+----------------------------------------------------------------------
+B) UNE SEULE FOIS : donner l'adresse a l'application FDL (ordinateur)
+----------------------------------------------------------------------
+  1. Onglet "Reglages", ligne "Adresse du programme en ligne".
+  2. Cliquez sur "Calculer depuis GitHub...".
+  3. Tapez votre nom d'utilisateur GitHub, puis le nom du depot (fdl-programme).
+  4. L'adresse apparait, de la forme :
+     https://raw.githubusercontent.com/VOTRE-NOM/fdl-programme/main/programme.json
+  5. Cliquez sur "Enregistrer" (en haut).
+
+----------------------------------------------------------------------
+C) CHAQUE FOIS QUE LE PROGRAMME CHANGE
+----------------------------------------------------------------------
+  1. Modifiez / generez le programme dans l'application, puis "Enregistrer".
+  2. Cliquez sur "Exporter : Publier en ligne...".
+  3. Gardez le nom propose (programme.json) et enregistrez le fichier (Bureau par exemple).
+  4. Repondez "Oui" a "Ouvrir la page GitHub maintenant ?".
+  5. Sur la page GitHub, glissez le fichier programme.json dans la zone indiquee
+     (il remplace l'ancien automatiquement), puis cliquez sur "Commit changes".
+  Termine. Les membres le recoivent a leur prochaine ouverture de l'application.
+
+----------------------------------------------------------------------
+D) PREMIERE INSTALLATION DES MEMBRES (une seule fois par personne)
+----------------------------------------------------------------------
+  Application : bouton "Page mobile..." > fichier FDL_Mon_Planning.html (cree APRES l'etape B,
+  car il contient l'adresse en ligne). Envoyez-le UNE fois aux membres :
+    - avec l'application Android : "Charger le programme" > choisir ce fichier ;
+    - sans application : ouvrir le fichier dans Chrome.
+  Ensuite, les mises a jour arrivent seules.
+
+----------------------------------------------------------------------
+E) BON A SAVOIR - COMMENT LES MISES A JOUR S'APPLIQUENT
+----------------------------------------------------------------------
+  - CE QUI EST PUBLIE EN LIGNE FAIT FOI, DANS LES DEUX SENS : une periode suivante OU un retour
+    a la periode precedente (ex. de juillet-decembre vers janvier-juin). Pour revenir en arriere :
+    ouvrez dans l'application FDL le projet de la periode voulue, puis "Publier en ligne...".
+    N'envoyez pas un ancien fichier programme.json garde de cote : utilisez toujours le bouton.
+  - Un fichier charge A LA MAIN dans l'application Android (bouton "Charger le programme") est
+    conserve jusqu'a la prochaine publication. Onglet Rappels, bouton "Utiliser la version en ligne"
+    pour reprendre tout de suite la version publiee.
+  - L'adresse en ligne est retenue par l'application FDL pour TOUS vos projets (une seule saisie).
+  - La mise a jour se fait a l'OUVERTURE de l'application, avec internet (pas en arriere-plan).
+    La verification est limitee a une fois toutes les 10 minutes : "Verifier maintenant" (onglet
+    Rappels) la force. L'onglet indique la version en ligne (periode et date de publication).
+  - Sans connexion, l'application garde la derniere version recue.
+  - Apres une mise a jour, les rappels (notifications) sont reprogrammes automatiquement.
+
+----------------------------------------------------------------------
+F) VERIFIER QUE L'ADRESSE MARCHE
+----------------------------------------------------------------------
+  Ouvrez l'adresse dans un navigateur : vous devez voir du texte qui commence par {"periode":...
+  Si GitHub affiche "404", le fichier n'est pas encore depose ou le nom du depot est faux.
+
+----------------------------------------------------------------------
+G) CHANGER DE PERIODE (y compris revenir a une periode plus ancienne)
+----------------------------------------------------------------------
+  Pour que les membres passent a une autre periode (par exemple de juillet-decembre a janvier-juin) :
+    1. dans l'application FDL, ouvrez le projet de cette periode puis "Publier en ligne..." ;
+       le fichier recoit la date du jour, donc il est considere comme le plus recent ;
+    2. glissez programme.json sur GitHub (il remplace l'ancien) et "Commit changes".
+  Regles de l'application du membre :
+    - programme recu par internet : la version publiee en ligne fait TOUJOURS foi, meme si elle est plus ancienne ;
+    - fichier charge A LA MAIN : il est conserve tant que la version en ligne n'est pas plus recente que lui.
+      Si l'application affiche "fichier charge a la main : conserve...", touchez
+      Rappels > "Utiliser la version en ligne" pour passer a la version publiee.
+  Astuce : pour que les membres voient aussi le semestre precedent, publiez une periode d'un an
+  (Reglages : du 1er janvier au 31 decembre).
